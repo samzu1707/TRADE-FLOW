@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Shop — TradeFlow{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <h1>All Products</h1>
+    <p>Browse our full catalog with filters and sorting</p>
+</section>
+
+<section class="section shop-layout">
+    <aside class="shop-sidebar glass-card">
+        <h3>Filters</h3>
+        <label class="filter-label">Category</label>
+        <select id="filter-category">
+            <option value="">All Categories</option>
+        </select>
+        <label class="filter-label">Sort By</label>
+        <select id="sort-by">
+            <option value="default">Default</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Best Rated</option>
+            <option value="name">Name A-Z</option>
+        </select>
+        <label class="filter-label">Price Range (PKR)</label>
+        <div class="price-range">
+            <input type="number" id="price-min" placeholder="Min" min="0">
+            <input type="number" id="price-max" placeholder="Max" min="0">
+        </div>
+        <button class="btn btn-primary btn-block" id="apply-filters">Apply Filters</button>
+        <button class="btn btn-ghost btn-block" id="clear-filters">Clear</button>
+    </aside>
+
+    <div class="shop-main">
+        <div class="shop-toolbar">
+            <p id="results-count">Showing products</p>
+            <input type="search" id="shop-search" placeholder="Search in results..." class="shop-search-input">
+        </div>
+        <div class="product-grid" id="product-grid"></div>
+        <div class="pagination" id="pagination"></div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    TradeFlow.initShopPage();
+});
+</script>
+{% endblock %}
+

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Wishlist — TradeFlow{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <h1>My Wishlist</h1>
+    <p>Save your favorite items for later</p>
+</section>
+
+<section class="section">
+    <div class="product-grid" id="wishlist-grid"></div>
+    <div id="wishlist-empty" class="empty-state" style="display:none;">
+        <p>Your wishlist is empty.</p>
+        <a href="/products" class="btn btn-primary">Browse Products</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", () => TradeFlow.initWishlistPage());
+</script>
+{% endblock %}
+

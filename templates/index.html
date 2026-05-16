@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block title %}Home — TradeFlow AI Commerce{% endblock %}
+
+{% block content %}
+<section class="hero" id="home">
+    <div class="hero-content animate-in">
+        <span class="pill">AI-Powered Shopping</span>
+        <h1>Discover Premium Products with <span class="gradient-text">Smart Recommendations</span></h1>
+        <p>TradeFlow combines sentiment-aware reviews, intelligent product picks, and an AI assistant for a modern shopping experience.</p>
+        <div class="hero-actions">
+            <a href="/products" class="btn btn-primary">Shop Now</a>
+            <a href="#ai-recommendations" class="btn btn-ghost">View AI Picks</a>
+        </div>
+    </div>
+    <div class="hero-visual glass-card animate-in delay-1">
+        <img src="/assests/logo.png" alt="TradeFlow" class="hero-logo" onerror="this.parentElement.classList.add('no-logo')">
+        <h3>TradeFlow System</h3>
+        <p>Recommendations · Sentiment · Smart Chat</p>
+        <div class="hero-stats">
+            <div><strong>14+</strong><span>Products</span></div>
+            <div><strong>AI</strong><span>Reviews</span></div>
+            <div><strong>24/7</strong><span>Support</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="categories">
+    <div class="section-header">
+        <h2>Shop by Category</h2>
+        <p>Browse curated collections tailored to your lifestyle</p>
+    </div>
+    <div class="category-grid" id="category-grid"></div>
+</section>
+
+<section class="section" id="featured">
+    <div class="section-header">
+        <h2>Featured Products</h2>
+        <a href="/products" class="link-arrow">View all →</a>
+    </div>
+    <div class="product-grid" id="featured-products"></div>
+</section>
+
+<section class="section flash-sale" id="flash-sale">
+    <div class="flash-sale-inner glass-card">
+        <div class="flash-sale-text">
+            <span class="pill pill-sale">Flash Sale</span>
+            <h2>Up to 40% Off Selected Items</h2>
+            <p>Limited-time deals on top-rated products. Hurry before the timer ends!</p>
+            <div class="countdown" id="countdown">
+                <div><span id="cd-hours">00</span><small>Hours</small></div>
+                <div><span id="cd-mins">00</span><small>Mins</small></div>
+                <div><span id="cd-secs">00</span><small>Secs</small></div>
+            </div>
+            <a href="/products" class="btn btn-primary">Shop Sale</a>
+        </div>
+        <div class="flash-sale-products" id="flash-sale-products"></div>
+    </div>
+</section>
+
+<section class="section" id="best-selling">
+    <div class="section-header">
+        <h2>Best Selling</h2>
+        <p>Top picks loved by our customers</p>
+    </div>
+    <div class="product-grid" id="bestseller-products"></div>
+</section>
+
+<section class="section ai-section" id="ai-recommendations">
+    <div class="section-header">
+        <h2>AI Recommendations</h2>
+        <p>Ranked by review sentiment — powered by our trained model</p>
+    </div>
+    <div class="ai-controls glass-card">
+        <input id="category-input" type="text" placeholder="Filter by category (e.g. Electronics)">
+        <button id="recommend-btn" class="btn btn-primary">Refresh Picks</button>
+    </div>
+    <div class="product-grid" id="recommend-list"></div>
+</section>
+
+<section class="section review-section" id="reviews">
+    <div class="section-header">
+        <h2>Submit a Review</h2>
+        <p>AI analyzes sentiment as positive, negative, or neutral</p>
+    </div>
+    <form id="review-form" class="review-form glass-card">
+        <div class="form-row">
+            <input id="review-name" type="text" placeholder="Your name">
+            <input id="review-product-id" type="number" placeholder="Product ID">
+        </div>
+        <textarea id="review-text" placeholder="Write your review..."></textarea>
+        <button type="submit" class="btn btn-primary">Analyze + Save Review</button>
+        <p id="review-result" class="status-text"></p>
+    </form>
+</section>
+
+<section class="section testimonials" id="testimonials">
+    <div class="section-header center">
+        <h2>What Customers Say</h2>
+    </div>
+    <div class="testimonial-slider" id="testimonial-slider">
+        <div class="testimonial-track" id="testimonial-track"></div>
+        <div class="slider-dots" id="slider-dots"></div>
+    </div>
+</section>
+
+<section class="section newsletter-section">
+    <div class="newsletter-banner glass-card">
+        <h2>Subscribe to Our Newsletter</h2>
+        <p>Get exclusive deals, new arrivals, and AI product picks.</p>
+        <form id="home-newsletter" class="newsletter-inline">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+<section class="section guidelines" id="guidelines">
+    <div class="section-header center">
+        <h2>How TradeFlow Works</h2>
+    </div>
+    <div class="guideline-grid">
+        <div class="guide-card glass-card"><h3>1. Browse Products</h3><p>Explore catalog with prices, categories, and sentiment counts.</p></div>
+        <div class="guide-card glass-card"><h3>2. Submit Reviews</h3><p>AI detects positive, negative, or neutral sentiment from your text.</p></div>
+        <div class="guide-card glass-card"><h3>3. Get AI Picks</h3><p>Recommendations update based on review sentiment scores.</p></div>
+        <div class="guide-card glass-card"><h3>4. Chat Support</h3><p>Ask the assistant about shipping, returns, payment, and more.</p></div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const products = await TradeFlow.fetchProducts();
+
+    TradeFlow.renderCategories(document.getElementById("category-grid"), products);
+    TradeFlow.renderProductGrid(document.getElementById("featured-products"), products.slice(0, 4));
+    TradeFlow.renderProductGrid(document.getElementById("bestseller-products"), [...products].sort((a,b) => (b.positive_reviews||0) - (a.positive_reviews||0)).slice(0, 4));
+    TradeFlow.renderProductGrid(document.getElementById("flash-sale-products"), products.slice(0, 3), { sale: true });
+    TradeFlow.initCountdown();
+    TradeFlow.initTestimonials();
+    TradeFlow.loadRecommendations();
+
+    document.getElementById("recommend-btn").addEventListener("click", () => TradeFlow.loadRecommendations());
+    document.getElementById("review-form").addEventListener("submit", TradeFlow.submitReview);
+    document.getElementById("home-newsletter").addEventListener("submit", (e) => {
+        e.preventDefault();
+        TradeFlow.showToast("Subscribed successfully!", "success");
+        e.target.reset();
+    });
+});
+</script>
+{% endblock %}
+
+
+

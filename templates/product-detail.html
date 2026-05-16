@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Product Details — TradeFlow{% endblock %}
+
+{% block content %}
+<section class="section product-detail-page" id="product-detail" data-product-id="{{ product_id }}">
+    <div class="breadcrumb">
+        <a href="/">Home</a> / <a href="/products">Shop</a> / <span id="breadcrumb-name">Product</span>
+    </div>
+    <div class="product-detail-grid" id="detail-content">
+        <p class="loading-text">Loading product...</p>
+    </div>
+</section>
+
+<section class="section" id="related-section" style="display:none;">
+    <div class="section-header">
+        <h2>Related Products</h2>
+    </div>
+    <div class="product-grid" id="related-products"></div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    TradeFlow.initProductDetail({{ product_id }});
+});
+</script>
+{% endblock %}
+

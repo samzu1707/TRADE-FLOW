@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Contact — TradeFlow{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <h1>Contact Us</h1>
+    <p>We'd love to hear from you</p>
+</section>
+
+<section class="section contact-page">
+    <div class="contact-grid">
+        <div class="contact-info glass-card">
+            <h3>Get in Touch</h3>
+            <div class="contact-item">
+                <strong>Email</strong>
+                <p>support@tradeflow.com</p>
+            </div>
+            <div class="contact-item">
+                <strong>Phone</strong>
+                <p>+92 300 1234567</p>
+            </div>
+            <div class="contact-item">
+                <strong>Address</strong>
+                <p>TradeFlow HQ, Islamabad, Pakistan</p>
+            </div>
+            <div class="contact-item">
+                <strong>Hours</strong>
+                <p>Mon – Sat, 9:00 AM – 6:00 PM</p>
+            </div>
+        </div>
+
+        <form id="contact-form" class="contact-form glass-card">
+            <h3>Send a Message</h3>
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <input type="text" name="subject" placeholder="Subject" required>
+            <textarea name="message" placeholder="Your message..." required></textarea>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            <p id="contact-status" class="status-text"></p>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", () => TradeFlow.initContactPage());
+</script>
+{% endblock %}
+

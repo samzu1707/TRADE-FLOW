@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Login & Sign Up — TradeFlow{% endblock %}
+
+{% block content %}
+<section class="section auth-page">
+    <div class="auth-container glass-card">
+        <div class="auth-tabs">
+            <button class="auth-tab active" data-tab="login">Login</button>
+            <button class="auth-tab" data-tab="signup">Sign Up</button>
+        </div>
+
+        <form id="login-form" class="auth-form active">
+            <h2>Welcome Back</h2>
+            <p class="auth-sub">Sign in to your TradeFlow account</p>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <label class="checkbox-label"><input type="checkbox"> Remember me</label>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+
+        <form id="signup-form" class="auth-form">
+            <h2>Create Account</h2>
+            <p class="auth-sub">Join TradeFlow for a smarter shopping experience</p>
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <input type="password" placeholder="Confirm Password" required>
+            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", () => TradeFlow.initAuthPage());
+</script>
+{% endblock %}
+
